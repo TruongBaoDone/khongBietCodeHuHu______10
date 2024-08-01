@@ -3002,14 +3002,16 @@ end
 		end)
 	end
    
-function WaitHRP(q0) 
+local isTeleporting = false
+
+function WaitHRP(q0)
     if not q0 then return end
-    return q0.Character:WaitForChild("HumanoidRootPart", 9) 
+    return q0.Character:WaitForChild("HumanoidRootPart", 9)
 end
 
 function topos(Pos)
     local plr = game.Players.LocalPlayer
-    if plr.Character.Humanoid.Health > 0 and plr.Character:FindFirstChild("HumanoidRootPart") then
+    if plr.Character and plr.Character.Humanoid.Health > 0 and plr.Character:FindFirstChild("HumanoidRootPart") then
         local Distance = (Pos.Position - plr.Character.HumanoidRootPart.Position).Magnitude
         if not Pos then 
             return 
@@ -3023,12 +3025,14 @@ function topos(Pos)
             PartTele.CanCollide = true
             PartTele.CFrame = WaitHRP(plr).CFrame 
             PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
+                if not isTeleporting then return end
                 task.wait()
                 if plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
                     WaitHRP(plr).CFrame = PartTele.CFrame
                 end
             end)
         end
+        isTeleporting = true
         local Tween = game:GetService("TweenService"):Create(plr.Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
         Tween:Play()
         Tween.Completed:Connect(function(status)
@@ -3036,61 +3040,29 @@ function topos(Pos)
                 if plr.Character:FindFirstChild("PartTele") then
                     plr.Character.PartTele:Destroy()
                 end
+                isTeleporting = false
             end
         end)
     end
 end
 
 function TP1(Pos)
+    topos(Pos)
+end
+
+function stopTeleport()
+    isTeleporting = false
     local plr = game.Players.LocalPlayer
-    if plr.Character.Humanoid.Health > 0 and plr.Character:FindFirstChild("HumanoidRootPart") then
-        local Distance = (Pos.Position - plr.Character.HumanoidRootPart.Position).Magnitude
-        if not Pos then 
-            return 
-        end
-        if not plr.Character:FindFirstChild("PartTele") then
-            local PartTele = Instance.new("Part", plr.Character) -- Create part
-            PartTele.Size = Vector3.new(10,1,10)
-            PartTele.Name = "PartTele"
-            PartTele.Anchored = true
-            PartTele.Transparency = 1
-            PartTele.CanCollide = true
-            PartTele.CFrame = WaitHRP(plr).CFrame 
-            PartTele:GetPropertyChangedSignal("CFrame"):Connect(function()
-                task.wait()
-                if plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
-                    WaitHRP(plr).CFrame = PartTele.CFrame
-                end
-            end)
-        end
-        local Tween = game:GetService("TweenService"):Create(plr.Character.PartTele, TweenInfo.new(Distance / getgenv().TweenSpeed, Enum.EasingStyle.Linear), {CFrame = Pos})
-        Tween:Play()
-        Tween.Completed:Connect(function(status)
-            if status == Enum.PlaybackState.Completed then
-                if plr.Character:FindFirstChild("PartTele") then
-                    plr.Character.PartTele:Destroy()
-                end
-            end
-        end)
-        
-        if Distance <= 0 then
-            Tween:Cancel()
-            plr.Character.PartTele.CFrame = Pos
-            plr.Character.PartTele:Destroy()
-        end
+    if plr.Character:FindFirstChild("PartTele") then
+        plr.Character.PartTele:Destroy()
     end
 end
 
 spawn(function()
-    local plr = game.Players.LocalPlayer
     while task.wait() do
-        pcall(function()
-            if plr.Character.Humanoid.Health <= 0 or not plr.Character:FindFirstChild("HumanoidRootPart") then
-                if plr.Character:FindFirstChild("PartTele") then
-                    plr.Character:FindFirstChild("PartTele"):Destroy()
-                end
-            end
-        end)
+        if not isTeleporting then
+            stopTeleport()
+        end
     end
 end)
 
@@ -3100,12 +3072,27 @@ spawn(function()
         pcall(function()
             if plr.Character:FindFirstChild("PartTele") then
                 if (plr.Character.HumanoidRootPart.Position - plr.Character.PartTele.Position).Magnitude >= 100 then
-                    plr.Character:FindFirstChild("PartTele"):Destroy()
+                    stopTeleport()
                 end
             end
         end)
     end
 end)
+
+local plr = game.Players.LocalPlayer
+
+local function onCharacterAdded(character)
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.Died:Connect(function()
+        stopTeleport()
+    end)
+end
+
+plr.CharacterAdded:Connect(onCharacterAdded)
+
+if plr.Character then
+    onCharacterAdded(plr.Character)
+end
 
 function TPB(CFgo)
 	local tween_s = game:service"TweenService"
@@ -5429,7 +5416,7 @@ _G.AttackMob = V
 end)
 
  spawn(function()
-     while wait(_G.FastAttackDelay) do
+     while wait() do
          if _G.AttackMob and not _G.FarmFruitMastery and not _G.FarmGunMastery then
              pcall(function()
                  AttackNoCD()
