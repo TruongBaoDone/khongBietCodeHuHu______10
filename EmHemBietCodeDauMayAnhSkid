@@ -2691,48 +2691,6 @@ function UpdateIslandMirageESP()
     end
 end
 
-function isnil(thing)
-    return (thing == nil)
-end
-local function round(n)
-    return math.floor(tonumber(n) + 0.5)
-end
-Number = math.random(1, 1000000)
-
-function UpdateAfdESP() 
-    for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
-        pcall(function()
-            if AfdESP then 
-                if v.Name == "Advanced Fruit Dealer" then
-                    if not v:FindFirstChild('NameEsp') then
-                        local bill = Instance.new('BillboardGui',v)
-                        bill.Name = 'NameEsp'
-                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
-                        bill.Size = UDim2.new(1,200,1,30)
-                        bill.Adornee = v
-                        bill.AlwaysOnTop = true
-                        local name = Instance.new('TextLabel',bill)
-                        name.Font = "Code"
-                        name.FontSize = "Size14"
-                        name.TextWrapped = true
-                        name.Size = UDim2.new(1,0,1,0)
-                        name.TextYAlignment = 'Top'
-                        name.BackgroundTransparency = 1
-                        name.TextStrokeTransparency = 0.5
-                        name.TextColor3 = Color3.fromRGB(80, 245, 245)
-                    else
-                        v['NameEsp'].TextLabel.Text = (v.Name ..'   \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' M')
-                    end
-                end
-            else
-                if v:FindFirstChild('NameEsp') then
-                    v:FindFirstChild('NameEsp'):Destroy()
-                end
-            end
-        end)
-    end
-end
-
 function UpdateLSDESP() 
     for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
         pcall(function()
@@ -2754,40 +2712,6 @@ function UpdateLSDESP()
                         name.BackgroundTransparency = 1
                         name.TextStrokeTransparency = 0.5
                         name.TextColor3 = Color3.fromRGB(255, 255, 255)
-                    else
-                        v['NameEsp'].TextLabel.Text = (v.Name ..'   \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' M')
-                    end
-                end
-            else
-                if v:FindFirstChild('NameEsp') then
-                    v:FindFirstChild('NameEsp'):Destroy()
-                end
-            end
-        end)
-    end
-end
-
-function UpdateGeaESP() 
-    for i,v in pairs(game:GetService("Workspace").Map.MysticIsland:GetChildren()) do 
-        pcall(function()
-            if GearESP then 
-                if v.Name == "MeshPart" then
-                    if not v:FindFirstChild('NameEsp') then
-                        local bill = Instance.new('BillboardGui',v)
-                        bill.Name = 'NameEsp'
-                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
-                        bill.Size = UDim2.new(1,200,1,30)
-                        bill.Adornee = v
-                        bill.AlwaysOnTop = true
-                        local name = Instance.new('TextLabel',bill)
-                        name.Font = "Code"
-                        name.FontSize = "Size14"
-                        name.TextWrapped = true
-                        name.Size = UDim2.new(1,0,1,0)
-                        name.TextYAlignment = 'Top'
-                        name.BackgroundTransparency = 1
-                        name.TextStrokeTransparency = 0.5
-                        name.TextColor3 = Color3.fromRGB(80, 245, 245)
                     else
                         v['NameEsp'].TextLabel.Text = (v.Name ..'   \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' M')
                     end
@@ -3107,16 +3031,6 @@ function TPB(CFgo)
 	end
 
 	return tweenfunc
-end
-
-function fastpos(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    Speed = 1000
-    game:GetService("TweenService"):Create(
-        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
-        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
-        {CFrame = Pos}
-    ):Play()
 end
     
 Type = 1
@@ -4208,6 +4122,120 @@ end)
             end
         end
     end)
+    
+Mn:Seperator("Misc Bone")
+ 
+BoneCheck = Mn:Label("Total Bone: N/A")
+    
+    spawn(function()
+        while wait() do
+            pcall(function()
+                BoneCheck:Set("Total Bone: "..(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check")))
+            end)
+        end
+    end)
+
+    Mn:Toggle("Auto Farm Bone",_G.Bone,function(V)
+        _G.Bone = V
+        StopTween(_G.Bone)
+    end)
+   local BonePos = CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375)
+    spawn(function()
+        while wait() do 
+            if Mode == "NoQuest" and _G.Bone and World3 then
+                pcall(function()
+                    if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
+                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
+                               if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                   repeat task.wait()
+                                        AutoHaki()
+                                        EquipWeapon(_G.SelectWeapon)
+                                        v.HumanoidRootPart.CanCollide = false
+                                        v.Humanoid.WalkSpeed = 0
+                                        v.Head.CanCollide = false 
+                                        StartMagnetBoneMon = true
+                                        PosMonBone = v.HumanoidRootPart.CFrame
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                    until not _G.Bone or not v.Parent or v.Humanoid.Health <= 0
+                                end
+                            end
+                        end
+                    else
+                    if BypassTP then
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BonePos.Position).Magnitude > 3500 then
+			        BTP(BonePos)
+				    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BonePos.Position).Magnitude < 3500 then
+				    topos(BonePos)
+					end
+				else
+				    topos(BonePos)
+				end
+				        UnEquipWeapon(_G.SelectWeapon)
+                        StartMagnetBoneMon = false
+						topos(CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375))
+                        for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do 
+                            if v.Name == "Reborn Skeleton" then
+                                topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                            elseif v.Name == "Living Zombie" then
+                                topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                            elseif v.Name == "Demonic Soul" then
+                                topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                            elseif v.Name == "Posessed Mummy" then
+                                topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                            end
+                        end
+                    end
+                end)
+            end
+        end
+    end)    
+
+    Mn:Toggle("Auto Random Surprise",_G.Random_Bone,function(V)
+        _G.Random_Bone = V
+    end)
+    
+    spawn(function()
+        pcall(function()
+            while wait() do
+                if _G.Random_Bone then    
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Buy",1,1)
+                end
+            end
+        end)
+    end)
+    
+    Mn:Toggle("Auto Pray",pry,function(V)
+    _G.Pray = V
+    end)
+    
+    spawn(function()
+        pcall(function()
+            while wait(.1) do
+                if _G.Pray then    
+                    TP1(CFrame.new(-8652.99707, 143.450119, 6170.50879, -0.983064115, -2.48005533e-10, 0.18326205, -1.78910387e-09, 1, -8.24392288e-09, -0.18326205, -8.43218029e-09, -0.983064115))
+                    wait()
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("gravestoneEvent",1)
+                end
+            end
+        end)
+    end)
+    
+    Mn:Toggle("Auto Try Luck",Trylux,function(V)
+    _G.Trylux = V
+    end)
+    
+    spawn(function()
+        pcall(function()
+            while wait(.1) do
+                if _G.Trylux then    
+                    TP1(CFrame.new(-8652.99707, 143.450119, 6170.50879, -0.983064115, -2.48005533e-10, 0.18326205, -1.78910387e-09, 1, -8.24392288e-09, -0.18326205, -8.43218029e-09, -0.983064115))
+                    wait()
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("gravestoneEvent",2)
+                end
+            end
+        end)
+    end)
 
     Mn:Seperator("Dought Boss")
 
@@ -4386,120 +4414,6 @@ end)
                 end)
             end
         end
-    end)
-    
-Mn:Seperator("Misc Bone")
- 
-BoneCheck = Mn:Label("Total Bone: N/A")
-    
-    spawn(function()
-        while wait() do
-            pcall(function()
-                BoneCheck:Set("Total Bone: "..(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Check")))
-            end)
-        end
-    end)
-
-    Mn:Toggle("Auto Farm Bone",_G.Bone,function(V)
-        _G.Bone = V
-        StopTween(_G.Bone)
-    end)
-   local BonePos = CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375)
-    spawn(function()
-        while wait() do 
-            if Mode == "NoQuest" and _G.Bone and World3 then
-                pcall(function()
-                    if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
-                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
-                               if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                   repeat task.wait()
-                                        AutoHaki()
-                                        EquipWeapon(_G.SelectWeapon)
-                                        v.HumanoidRootPart.CanCollide = false
-                                        v.Humanoid.WalkSpeed = 0
-                                        v.Head.CanCollide = false 
-                                        StartMagnetBoneMon = true
-                                        PosMonBone = v.HumanoidRootPart.CFrame
-                                        topos(v.HumanoidRootPart.CFrame * Pos)
-                                    until not _G.Bone or not v.Parent or v.Humanoid.Health <= 0
-                                end
-                            end
-                        end
-                    else
-                    if BypassTP then
-                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BonePos.Position).Magnitude > 3500 then
-			        BTP(BonePos)
-				    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - BonePos.Position).Magnitude < 3500 then
-				    topos(BonePos)
-					end
-				else
-				    topos(BonePos)
-				end
-				        UnEquipWeapon(_G.SelectWeapon)
-                        StartMagnetBoneMon = false
-						topos(CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375))
-                        for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do 
-                            if v.Name == "Reborn Skeleton" then
-                                topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
-                            elseif v.Name == "Living Zombie" then
-                                topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
-                            elseif v.Name == "Demonic Soul" then
-                                topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
-                            elseif v.Name == "Posessed Mummy" then
-                                topos(v.HumanoidRootPart.CFrame * CFrame.new(2,20,2))
-                            end
-                        end
-                    end
-                end)
-            end
-        end
-    end)    
-
-    Mn:Toggle("Auto Random Surprise",_G.Random_Bone,function(V)
-        _G.Random_Bone = V
-    end)
-    
-    spawn(function()
-        pcall(function()
-            while wait() do
-                if _G.Random_Bone then    
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Buy",1,1)
-                end
-            end
-        end)
-    end)
-    
-    Mn:Toggle("Auto Pray",pry,function(V)
-    _G.Pray = V
-    end)
-    
-    spawn(function()
-        pcall(function()
-            while wait(.1) do
-                if _G.Pray then    
-                    TP1(CFrame.new(-8652.99707, 143.450119, 6170.50879, -0.983064115, -2.48005533e-10, 0.18326205, -1.78910387e-09, 1, -8.24392288e-09, -0.18326205, -8.43218029e-09, -0.983064115))
-                    wait()
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("gravestoneEvent",1)
-                end
-            end
-        end)
-    end)
-    
-    Mn:Toggle("Auto Try Luck",Trylux,function(V)
-    _G.Trylux = V
-    end)
-    
-    spawn(function()
-        pcall(function()
-            while wait(.1) do
-                if _G.Trylux then    
-                    TP1(CFrame.new(-8652.99707, 143.450119, 6170.50879, -0.983064115, -2.48005533e-10, 0.18326205, -1.78910387e-09, 1, -8.24392288e-09, -0.18326205, -8.43218029e-09, -0.983064115))
-                    wait()
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("gravestoneEvent",2)
-                end
-            end
-        end)
     end)
     
    Mn:Seperator("Misc Mastery")
@@ -5210,7 +5124,7 @@ end)
 
 St:Toggle("Fast Attack",true,function(V)
 _G.FastAttack = V
-end)      
+end)
 
 spawn(function()
     while wait(.1) do
@@ -5224,28 +5138,39 @@ spawn(function()
     end
 end)
 
-CombatFrameworkR = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
-y = debug.getupvalues(CombatFrameworkR)[2]
-spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        if _G.FastAttack then
-            if typeof(y) == "table" then
-                pcall(function()
-                    y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
-                    y.activeController.timeToNextAttack = 0
-                    y.activeController.hitboxMagnitude = 9999
-                    y.activeController.active = false
-                    y.activeController.timeToNextBlock = 0
-                    y.activeController.focusStart = 0
-                    y.activeController.increment = 4
-                    y.activeController.blocking = false
-                    y.activeController.attacking = false
-                    y.activeController.humanoid.AutoRotate = true
-                end)
-            end
-        end
-    end)
+St:Toggle("No Attack Animation",true,function(V)
+NoAttackAnimation = V
 end)
+
+NoAttackAnimation = true
+local DmgAttack = game:GetService("ReplicatedStorage").Assets.GUI:WaitForChild("DamageCounter")
+local PC = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle)
+local RL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
+local oldRL = RL.wrapAttackAnimationAsync
+RL.wrapAttackAnimationAsync = function(a,b,c,d,func)
+	if not NoAttackAnimation then
+		return oldRL(a,b,c,60,func)
+	end
+
+	local Hits = {}
+	local Client = game.Players.LocalPlayer
+	local Characters = game:GetService("Workspace").Characters:GetChildren()
+	for i,v in pairs(Characters) do
+		local Human = v:FindFirstChildOfClass("Humanoid")
+		if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < 65 then
+			table.insert(Hits,Human.RootPart)
+		end
+	end
+	local Enemies = game:GetService("Workspace").Enemies:GetChildren()
+	for i,v in pairs(Enemies) do
+		local Human = v:FindFirstChildOfClass("Humanoid")
+		if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < 65 then
+			table.insert(Hits,Human.RootPart)
+		end
+	end
+	a:Play(0.01,0.01,0.01)
+	pcall(func,Hits)
+end
 
 St:Toggle("Attack On Player",true,function(V)
 _G.AttackMob = V
@@ -10290,19 +10215,34 @@ spawn(function()
     end
 end)
 
-E:Toggle("Auto Collect Azure",function(V)
-_G.CollectAzure = V
-end) 
-        
-spawn(function()
-    while wait() do
-        if _G.CollectAzure then
-            pcall(function()
-                if game:GetService("Workspace"):FindFirstChild("AttachedAzureEmber") then
-                    fastpos(game:GetService("Workspace"):WaitForChild("EmberTemplate"):FindFirstChild("Part").CFrame)
+local lumlinhhonLoopRunning = false
+
+E:Toggle("Auto Collect Azure Ember", false, function(V)
+    _G.CltAze = V
+    StopTween(_G.CltAze)
+
+    if _G.CltAze then
+        spawn(function()
+            while _G.CltAze do
+                wait()
+                local emberTemplate = game:GetService("Workspace").EmberTemplate
+                local player = game.Players.LocalPlayer
+                local humanoidRootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+                if humanoidRootPart then
+                    local partFound = false
+                    while not partFound and humanoidRootPart:IsDescendantOf(workspace) do
+                        for _, v in pairs(emberTemplate:GetDescendants()) do
+                            if v:IsA("BasePart") and v.Name == "Part" then
+                                partFound = true
+                                humanoidRootPart.CFrame = v.CFrame
+                                break
+                            end
+                        end
+                        wait(0.1)
+                    end
                 end
-            end)
-        end
+            end
+        end)
     end
 end)
     
@@ -10410,20 +10350,6 @@ V:Toggle("Esp Mystic Island", false, function(V)
     MirageIslandESP = V
         while MirageIslandESP do wait()
             UpdateIslandMirageESP()
-        end
-    end)
-
-V:Toggle("Esp Advanced Fruit Dealer", false, function(V)
-    AfdESP = V
-        while AfdESP do wait()
-            UpdateAfdESP()
-        end
-    end)
-    
-V:Toggle("Esp Gear", false, function(V)
-    GearESP = V
-        while GearESP do wait()
-            UpdateGeaESP() 
         end
     end)
 
