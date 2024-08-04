@@ -3316,8 +3316,8 @@ end)
 --------------------------------------------------------------------------------------------------------
 Mn:Seperator("Weapon")
 
-local AttackList = {"0", "0.1", "0.8", "0.15", "0.17", "0.19"}
-_G.FastAttackDelay = "0.15"
+local AttackList = {"Normal Attack", "Fast Attack", "Super Attack", "Xeter Attack"}
+_G.FastAttackDelay = "Fast Attack"
 Mn:Dropdown("Fast Attack Delay", AttackList,function(V)
     _G.FastAttackDelay = V
 end)
@@ -3325,18 +3325,14 @@ spawn(function()
     while wait(.1) do
         if _G.FastAttackDelay then
             pcall(function()
-                if _G.FastAttackDelay == "0" then
-                    _G.FastAttackDelay = 0
-                elseif _G.FastAttackDelay == "0.1" then
+                if _G.FastAttackDelay == "Normal Attack" then
                     _G.FastAttackDelay = 0.1
-                elseif _G.FastAttackDelay == "0.8" then
-                    _G.FastAttackDelay = 0.8
-                elseif _G.FastAttackDelay == "0.15" then
-                    _G.FastAttackDelay = 0.15
-                elseif _G.FastAttackDelay == "0.17" then
-                    _G.FastAttackDelay = 0.17
-                elseif _G.FastAttackDelay == "0.19" then
-                    _G.FastAttackDelay = 0.19
+                elseif _G.FastAttackDelay == "Fast Attack" then
+                    _G.FastAttackDelay = 0.07
+                elseif _G.FastAttackDelay == "Super Attack" then
+                    _G.FastAttackDelay = 0.04
+                elseif _G.FastAttackDelay == "Xeter Attack" then
+                    _G.FastAttackDelay = 0
                 end
             end)
         end
@@ -3469,6 +3465,18 @@ end)
             end
         end
     end
+  
+spawn(function()
+    while wait(.1) do
+        if _G.FastAttack then
+            pcall(function()
+                repeat task.wait(_G.FastAttackDelay)
+                    AttackHit()
+                until not _G.FastAttack
+            end)
+        end
+    end
+end)
 
 local WeaponList = {"Melee","Sword","Fruit","Gun"}
 _G.SelectWeapon = "Melee"
@@ -5126,18 +5134,6 @@ St:Toggle("Fast Attack",true,function(V)
 _G.FastAttack = V
 end)
 
-spawn(function()
-    while wait(.1) do
-        if _G.FastAttack then
-            pcall(function()
-                repeat task.wait(_G.FastAttackDelay)
-                    AttackHit()
-                until not _G.FastAttack
-            end)
-        end
-    end
-end)
-
 St:Toggle("No Attack Animation",true,function(V)
 NoAttackAnimation = V
 end)
@@ -5267,7 +5263,7 @@ St:Toggle("Auto Click",false,function(V)
 _G.Click = V
 end)
 
-St:Toggle("Disabled Notifications Text",false,function(V)
+St:Toggle("Disabled Notifications",false,function(V)
 _G.Remove_trct = V
 end)
 
@@ -5279,22 +5275,6 @@ spawn(function()
 			game.Players.LocalPlayer.PlayerGui.Notifications.Enabled = true
 		end
 	end
-end)
-
-St:Toggle("Remove Hit Sound And Level Up",false,function(Remo)
-_G.RemoveHit = Remo
-end)
-
-spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        if _G.RemoveHit == true then
-            game:GetService("ReplicatedStorage").Effect.Container.LevelUp:Destroy()
-            game:GetService("ReplicatedStorage").Util.Sound:Destroy()
-            game:GetService("ReplicatedStorage").Util.Sound.Storage.Other:FindFirstChild("LevelUp_Proxy"):Destroy()
-            game:GetService("ReplicatedStorage").Util.Sound.Storage.Other:FindFirstChild("LevelUp"):Destroy()
-            game:GetService("ReplicatedStorage").Effect.Container.Respawn:Destroy()        
-        end
-    end)
 end)
 
 St:Toggle("Disabled Damage",true,function(Remo)
