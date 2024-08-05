@@ -2,7 +2,7 @@ local Notification = require(game:GetService("ReplicatedStorage").Notification)
 Notification.new("<Color=Cyan>Welcome to Xeter Hub<Color=/>"):Display()
 wait(0.5)
 Notification.new("<Color=Yellow>Everyone Goes to Discord to Communicate<Color=/>"):Display()
-wait()
+wait(1)
 repeat
     wait()
 until game.Players.LocalPlayer
