@@ -1,12 +1,8 @@
 local Notification = require(game:GetService("ReplicatedStorage").Notification)
 Notification.new("<Color=Cyan>Welcome to Xeter Hub<Color=/>"):Display()
 wait(0.5)
-Notification.new("<Color=Yellow>Script Under Testing<Color=/>"):Display()
-wait(1)
-Notification.new("<Color=Yellow>Script Will Update As Soon As Possible<Color=/>"):Display()
-wait(1)
 Notification.new("<Color=Yellow>Everyone Goes to Discord to Communicate<Color=/>"):Display()
-wait(1)
+wait()
 repeat
     wait()
 until game.Players.LocalPlayer
@@ -3276,16 +3272,6 @@ end)
         while wait() do
             pcall(function()
                 localfrag:Set("Fragments:".." "..game:GetService("Players").LocalPlayer.Data.Fragments.Value)
-            end)
-        end
-    end)
-    
-    local localstat = I:Label("Stats Points")
-    
-    spawn(function()
-        while wait() do
-            pcall(function()
-                localstat:Set("Stats Points:".." "..game:GetService("Players").LocalPlayer.Data.Points.Value)
             end)
         end
     end)
@@ -10441,36 +10427,6 @@ local StarterGui = game:GetService('StarterGui')
 game:GetService('StarterGui'):SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, true)   
 end
   end)
-
-    V:Toggle("Highlight Mode",false,function(V)
-        if value == true then
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Beli.Visible = false
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.HP.Visible = false
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Energy.Visible = false
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.StatsButton.Visible = false
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ShopButton.Visible = false
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Skills.Visible = false
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Level.Visible = false
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.MenuButton.Visible = false
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Code.Visible = false
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Settings.Visible = false
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Mute.Visible = false
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.CrewButton.Visible = false
-        else
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Beli.Visible = true
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.HP.Visible = true
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Energy.Visible = true
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.StatsButton.Visible = true
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.ShopButton.Visible = true
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Skills.Visible = true
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Level.Visible = true
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.MenuButton.Visible = true
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Code.Visible = true
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Settings.Visible = true
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Mute.Visible = true
-            game:GetService("Players")["LocalPlayer"].PlayerGui.Main.CrewButton.Visible = true
-        end
-    end)
 	
     V:Seperator("Hack")
     V:Button("Unlock Buso",function()
@@ -10688,11 +10644,11 @@ V:Button("Kaitun Cap", function(V)
 	
 V:Seperator("Graphic")
     
-    V:Button("Remove Fog (New)",function(qww)
+    V:Button("Remove Fog ( Sea 3 )",function(qww)
 	game:GetService("Lighting").LightingLayers:Destroy()
 	game:GetService("Lighting").Sky:Destroy()
 end)
-    
+
 V:Toggle("Remove Fog",RemoveFog,function(V)
     RemoveFog = V
     
