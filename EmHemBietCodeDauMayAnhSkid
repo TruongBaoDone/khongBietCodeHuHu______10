@@ -1047,7 +1047,7 @@ local UICorner = Instance.new("UICorner")
 Textbox.Name = "Textbox"
 Textbox.Parent = MainFramePage
 Textbox.BackgroundColor3 = Color3.new(0,134,139)
-Textbox.BackgroundTransparency = 0
+Textbox.BackgroundTransparency = 0.5
 Textbox.Size = UDim2.new(0, 379, 0, 31)
 
 TextboxCorner.CornerRadius = UDim.new(0, 5)
@@ -3302,6 +3302,52 @@ end)
 --------------------------------------------------------------------------------------------------------
 Mn:Seperator("Weapon")
 
+local WeaponList = {"Melee","Sword","Fruit","Gun"}
+_G.SelectWeapon = "Melee"
+Mn:Dropdown("Select Weapon",WeaponList,function(V)
+_G.SelectWeapon = V
+end)
+
+task.spawn(function()
+	while wait() do
+		pcall(function()
+			if _G.SelectWeapon == "Melee" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Melee" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			elseif _G.SelectWeapon == "Sword" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Sword" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			elseif _G.SelectWeapon == "Gun" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Gun" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			elseif _G.SelectWeapon == "Fruit" then
+				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.ToolTip == "Blox Fruit" then
+						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+							_G.SelectWeapon = v.Name
+						end
+					end
+				end
+			end
+		end)
+	end
+    end)
+
 local AttackList = {"Normal Attack", "Fast Attack", "Super Attack", "Xeter Attack"}
 _G.FastAttackDelay = "Fast Attack"
 Mn:Dropdown("Fast Attack Delay", AttackList,function(V)
@@ -3463,52 +3509,6 @@ spawn(function()
         end
     end
 end)
-
-local WeaponList = {"Melee","Sword","Fruit","Gun"}
-_G.SelectWeapon = "Melee"
-Mn:Dropdown("Select Weapon",WeaponList,function(V)
-_G.SelectWeapon = V
-end)
-
-task.spawn(function()
-	while wait() do
-		pcall(function()
-			if _G.SelectWeapon == "Melee" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Melee" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			elseif _G.SelectWeapon == "Sword" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Sword" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			elseif _G.SelectWeapon == "Gun" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Gun" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			elseif _G.SelectWeapon == "Fruit" then
-				for i ,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-					if v.ToolTip == "Blox Fruit" then
-						if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
-							_G.SelectWeapon = v.Name
-						end
-					end
-				end
-			end
-		end)
-	end
-    end)
 
 Mn:Seperator("Farming")
 
@@ -7428,7 +7428,7 @@ local PolePos = CFrame.new(-7748.0185546875, 5606.80615234375, -2305.89868164062
     
     M:Seperator("Rip Indra")
     
-    M:Toggle("Auto Auto Rip_Indra True",_G.DarkDagger,function(V)
+    M:Toggle("Auto Rip_Indra True",_G.DarkDagger,function(V)
         _G.DarkDagger = V
         StopTween(_G.DarkDagger)
     end)
@@ -7470,7 +7470,7 @@ local PolePos = CFrame.new(-7748.0185546875, 5606.80615234375, -2305.89868164062
         end)
     end)
     
-    M:Toggle("Auto Auto Rip_Indra True Hop",_G.DarkDagger_Hop,function(V)
+    M:Toggle("Auto Rip_Indra True Hop",_G.DarkDagger_Hop,function(V)
         _G.DarkDagger_Hop = V
     end)
     
@@ -12402,11 +12402,6 @@ spawn(function()
 	end)
 	
     Mc:Seperator("Misc")
-    
-    Mc:Button("Open Devil Shop",function()
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("GetFruits")
-        game:GetService("Players").LocalPlayer.PlayerGui.Main.FruitShop.Visible = true
-    end)
     
     Mc:Button("Title Name",function()
     local args = {
