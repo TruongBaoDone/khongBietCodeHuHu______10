@@ -143,9 +143,9 @@ local BtnStroke = Instance.new("UIStroke")
  BtnStroke.Name = "BtnStroke"
              BtnStroke.Parent = Main
              BtnStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-             BtnStroke.Color = Color3.fromRGB(0, 238, 0)            BtnStroke.LineJoinMode = Enum.LineJoinMode.Round
+             BtnStroke.Color = Color3.fromRGB(0, 205, 0)            BtnStroke.LineJoinMode = Enum.LineJoinMode.Round
          BtnStroke.Thickness = 1.7
-         BtnStroke.Transparency = 0.7
+         BtnStroke.Transparency = 0.5
          BtnStroke.Enabled = true
          BtnStroke.Archivable = true
          
@@ -6743,12 +6743,12 @@ end
     
 	M:Seperator("Thanh kiếm Waden")
 	
-	M:Toggle("Tự Động Thanh kiếm Waden", _G.waden,function(V)
+	M:Toggle("Lấy kiếm Waden", _G.waden,function(V)
          _G.waden = V
         StopTween( _G.waden)
     end)
     
-    M:Toggle("Tự Động Thanh kiếm Waden Đổi Sever", _G.wadenhop,function(V)
+    M:Toggle("kiếm Waden Đổi Sever", _G.wadenhop,function(V)
          _G.wadenhop = V
     end)
     
@@ -12143,13 +12143,13 @@ end)
         _G.BuyFruitSniper = V
     end)
     
-    D:Seperator("Người khác")
+    D:Seperator("khác")
     
-    D:Dropdown("Ăn Trái Đã Chọn",Table_DevilFruitSniper,function(V)
+    D:Dropdown("Chọn Trái",Table_DevilFruitSniper,function(V)
         _G.SelectFruitEat = V
     end)
     
-    D:Toggle("Tự Động Ăn Trái",_G.EatFruit,function(V)
+    D:Toggle("Ăn Trái Đã Chọn",_G.EatFruit,function(V)
         _G.EatFruit = V
     end)
     
@@ -12473,11 +12473,11 @@ end)
     
     Mc:Seperator("Tình trạng")
     
-    Mc:Dropdown("Chọn trạng thái Haki",{"State 0","State 1","State 2","State 3","State 4","State 5"},function(V)
+    Mc:Dropdown("Chọn trạng thái Haki",{"Tình trạng 0","Tình trạng 1","Tình trạng 2","Tình trạng 3","Tình trạng 4","Tình trạng 5"},function(V)
         _G.SelectStateHaki = V
     end)
     
-    Mc:Button("Change Buso Haki State",function()
+    Mc:Button("Thay đổi trạng thái Haki",function()
         if _G.SelectStateHaki == "Tình trạng 0" then
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ChangeBusoStage",0)
         elseif _G.SelectStateHaki == "Tình trạng 1" then
