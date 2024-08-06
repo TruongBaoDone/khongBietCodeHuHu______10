@@ -1365,7 +1365,7 @@ L2.Parent = L1
 L2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 L2.BorderSizePixel = 0
 L2.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
-L2.Size = UDim2.new(0, 53, 0, 53)
+L2.Size = UDim2.new(0, 53.5, 0, 53.5)
 L2.BackgroundTransparency = 1.000
 L2.Image = "rbxassetid://13717478897"
 L2.Draggable = true
@@ -3756,9 +3756,9 @@ spawn(function()
 		while wait() do
 			pcall(function()
 				if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") or game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") or game:GetService("ReplicatedStorage"):FindFirstChild("Urban") or game:GetService("Workspace").Enemies:FindFirstChild("Diablo") or game:GetService("Workspace").Enemies:FindFirstChild("Deandre") or game:GetService("Workspace").Enemies:FindFirstChild("Urban") then
-					Elite_Hunter_Status:Set("Status: Elite Spawn!")	
+					Elite_Hunter_Status:Set("Trạng thái: Có")	
 				else
-					Elite_Hunter_Status:Set("Status: Elite Not Spawn")	
+					Elite_Hunter_Status:Set("Trạng thái: Không")	
 				end
 			end)
 		end
