@@ -1171,8 +1171,8 @@ local UICorner = Instance.new("UICorner")
 
 Textbox.Name = "Textbox"
 Textbox.Parent = MainFramePage
-Textbox.BackgroundColor3 = Color3.new(0,134,139)
-Textbox.BackgroundTransparency = 0
+Textbox.BackgroundColor3 = Color3.new(0, 205, 0)
+Textbox.BackgroundTransparency = 1
 Textbox.Size = UDim2.new(0, 379, 0, 31)
 
 TextboxCorner.CornerRadius = UDim.new(0, 5)
@@ -3176,7 +3176,7 @@ spawn(function()
 -------------------------------------------------------------------------------------------------------
 local A = Update:Window(Enum.KeyCode.RightControl);
 local I = A:T("Trạng thái","rbxassetid://10734984606")
-local Mn = A:T("chung","rbxassetid://16062922985")
+local Mn = A:T("chung","rbxassetid://15712703260")
 local St = A:T("Cài Đặt ","rbxassetid://15712711639")
 local M = A:T("Vật Phẩm","rbxassetid://15712717270")
 local V4 = A:T("Tộc Và Đảo Bí Ẩn","rbxassetid://15712776421")
