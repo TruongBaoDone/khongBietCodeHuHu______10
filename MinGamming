@@ -1044,8 +1044,8 @@ local UICorner = Instance.new("UICorner")
 
 Textbox.Name = "Textbox"
 Textbox.Parent = MainFramePage
-Textbox.BackgroundColor3 = Color3.new(0,134,139)
-Textbox.BackgroundTransparency = 0
+Textbox.BackgroundColor3 = Color3.new(0, 205, 0)
+Textbox.BackgroundTransparency = 0.5
 Textbox.Size = UDim2.new(0, 379, 0, 31)
 
 TextboxCorner.CornerRadius = UDim.new(0, 5)
@@ -3176,17 +3176,17 @@ spawn(function()
 -------------------------------------------------------------------------------------------------------
 local A = Update:Window(Enum.KeyCode.RightControl);
 local I = A:T("Trạng thái","rbxassetid://10734984606")
-local Mn = A:T("chung","rbxassetid://10723407389")
-local St = A:T("Cài Đặt ","rbxassetid://10734950309")
-local M = A:T("Vật Phẩm","rbxassetid://10734975692")
-local V4 = A:T("Tộc Và Đảo Bí Ẩn","rbxassetid://10747372167")
-local E = A:T("Sự Kiện Biển","rbxassetid://10709761530")
+local Mn = A:T("chung","rbxassetid://16062922985")
+local St = A:T("Cài Đặt ","rbxassetid://15712711639")
+local M = A:T("Vật Phẩm","rbxassetid://15712717270")
+local V4 = A:T("Tộc Và Đảo Bí Ẩn","rbxassetid://15712776421")
+local E = A:T("Sự Kiện Biển","rbxassetid://15806749681")
 local P = A:T("Người Chơi","rbxassetid://10747373176")
 local V = A:T("Thị giác","rbxassetid://10723346959")
 local R = A:T("Tập Kích","rbxassetid://10723345749")
 local T = A:T("Di Chuyển","rbxassetid://10723434557")
 local S = A:T("Cửa Hàng","rbxassetid://10734952479")
-local D = A:T("Trái Ác Quỷ","rbxassetid://10709761889")
+local D = A:T("Trái Ác Quỷ","rbxassetid://15712758182")
 local Mc = A:T("Máy Chủ","rbxassetid://10709782582")
 --------------------------------------------------------------------------------------------------------
 I:Seperator("Vào Discord")
