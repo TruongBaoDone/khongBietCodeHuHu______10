@@ -3358,7 +3358,7 @@ spawn(function()
         if _G.FastAttackDelay then
             pcall(function()
                 if _G.FastAttackDelay == "Normal Attack" then
-                    _G.FastAttackDelay = 0.1
+                    _G.FastAttackDelay = 0.10
                 elseif _G.FastAttackDelay == "Fast Attack" then
                     _G.FastAttackDelay = 0.07
                 elseif _G.FastAttackDelay == "Super Attack" then
